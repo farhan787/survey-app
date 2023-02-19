@@ -7,11 +7,12 @@ const error = require('../middleware/error');
 module.exports = function (app) {
   app.use(
     '/graphql',
-    graphqlHTTP({
+    graphqlHTTP((req) => ({
       schema: graphqlSchema,
       rootValue: graphqlRootResolver,
-      graphiql: { headerEditorEnabled: true },
-    })
+      graphiql: true,
+      context: { accessToken: req.headers['access-token'] },
+    }))
   );
 
   app.use(error);

@@ -112,6 +112,10 @@ const submitSurvey = async ({ surveyId, questionIdsResponses }) => {
     });
     questionsResponsesPlaceholders = questionsResponsesPlaceholders.join(',');
 
+    if (!queryInsertValues.length) {
+      reject(new Error('Question ids do not belong to this survey'));
+    }
+
     const questionsResponsesInsertQuery = `
   INSERT INTO questions_responses(question_id, response) VALUES ${questionsResponsesPlaceholders} 
   ON CONFLICT(question_id, response) DO UPDATE SET counter = counter + 1`;

@@ -49,7 +49,7 @@ const graphqlSchema = buildSchema(`
 
     type Query {
         surveyResult(surveyId: Int!): SurveyResultType
-        authenticate(username: String!, password: String!): AuthenticateResponse
+        authenticate(userName: String!, password: String!): AuthenticateResponse
     }
 
     type Mutation {

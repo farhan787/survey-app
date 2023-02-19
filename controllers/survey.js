@@ -1,3 +1,4 @@
+const { authenticateUser } = require('../auth/authenticate');
 const { surveyResultDto } = require('../dto/survey');
 const {
   createSurvey,
@@ -5,13 +6,11 @@ const {
   submitSurvey,
 } = require('../services/Survey');
 
-const CreateSurvey = async ({ input }) => {
+const CreateSurvey = async ({ input }, context) => {
   try {
+    const { userId } = authenticateUser(context);
+
     const { title, questions } = input;
-
-    // TODO: fetch createdBy/userId from jwt token
-    const userId = 124;
-
     const surveyId = await createSurvey({ title, userId, questions });
     return {
       success: true,
@@ -27,8 +26,10 @@ const CreateSurvey = async ({ input }) => {
   }
 };
 
-const SubmitSurvey = async ({ input }) => {
+const SubmitSurvey = async ({ input }, context) => {
   try {
+    authenticateUser(context);
+
     const { surveyId, questionIdsResponses } = input;
 
     await submitSurvey({ surveyId, questionIdsResponses });
@@ -43,8 +44,10 @@ const SubmitSurvey = async ({ input }) => {
   }
 };
 
-const GetSurveyResult = async ({ surveyId }) => {
+const GetSurveyResult = async ({ surveyId }, context) => {
   try {
+    authenticateUser(context);
+
     const surveyResultDbData = await getSurveyResult(surveyId);
     return {
       success: true,
