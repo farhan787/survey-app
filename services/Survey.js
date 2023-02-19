@@ -72,8 +72,12 @@ const createSurvey = ({ title, userId, questions }) => {
               reject(err);
             }
 
-            // TODO: also return question ids with survey id
-            resolve(surveyId);
+            const lastQuestionId = this.lastID;
+            resolve({
+              surveyId,
+              firstQuestionId: lastQuestionId - questions.length + 1,
+              lastQuestionId,
+            });
           }
         );
       }

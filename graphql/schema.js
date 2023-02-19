@@ -36,10 +36,16 @@ const graphqlSchema = buildSchema(`
         no: Int
     }
 
-    type SuveyCreatedType {
+    type SurveyCreatedDataType {
+        surveyId: Int
+        firstQuestionId: Int
+        lastQuestionId: Int
+    }
+
+    type SurveyCreatedType {
         success: Boolean!
         message: String
-        surveyId: Int
+        data: SurveyCreatedDataType
     }
 
     type SuccessResponseType {
@@ -53,7 +59,7 @@ const graphqlSchema = buildSchema(`
     }
 
     type Mutation {
-        createSurvey(input: CreateSurveyInput): SuveyCreatedType
+        createSurvey(input: CreateSurveyInput): SurveyCreatedType
         submitSurvey(input: SubmitSurveyInput): SuccessResponseType
     }
 `);

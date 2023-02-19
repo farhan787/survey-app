@@ -11,10 +11,15 @@ const CreateSurvey = async ({ input }, context) => {
     const { userId } = authenticateUser(context);
 
     const { title, questions } = input;
-    const surveyId = await createSurvey({ title, userId, questions });
+    const { surveyId, firstQuestionId, lastQuestionId } = await createSurvey({
+      title,
+      userId,
+      questions,
+    });
+
     return {
       success: true,
-      surveyId,
+      data: { surveyId, firstQuestionId, lastQuestionId },
     };
   } catch (err) {
     console.error(err);
