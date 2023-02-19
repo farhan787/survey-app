@@ -72,6 +72,7 @@ const createSurvey = ({ title, userId, questions }) => {
               reject(err);
             }
 
+            // TODO: also return question ids with survey id
             resolve(surveyId);
           }
         );
