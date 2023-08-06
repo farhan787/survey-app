@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "c690d3ab-693f-4413-8f1c-7b3035d74f50",
+		"name": "Survey App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4199768"
+	},
+	"item": [
+		{
+			"name": "Authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Authentication {\n  authenticate(userName: \"farhan787\", password: \"Str0ngP@sswOrD;\") {\n    token\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{host}}/graphql",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Survey",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "access-token",
+						"value": "{{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateSurvey {\n  createSurvey(input: {title: \"Personality Survey\", questions: [\"Black is your favorite color?\", \"You drive your vehicle at high speed when you are excited about the day?\"]}) {\n    success\n    message\n    data {\n      surveyId\n      firstQuestionId\n      lastQuestionId\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{host}}/graphql",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Take/Submit Survey",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "access-token",
+						"value": "{{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation SubmitSurvey {\n  submitSurvey(input: {surveyId: 1, questionIdsResponses: [{questionId: 1, response: false}, {questionId: 2, response: true}]}) {\n    success\n    message\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{host}}/graphql",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Survey Result",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "access-token",
+						"value": "{{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  surveyResult(surveyId: 1) {\n    success\n    message\n    data {\n      questionId\n      result {\n        yes\n        no\n      }\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{host}}/graphql",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Image Thumbnail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"imageUrl\": \"https://cdn.britannica.com/91/181391-050-1DA18304/cat-toes-paw-number-paws-tiger-tabby.jpg\",\n    \"height\": 50,\n    \"width\": 50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/imageThumbnail",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"imageThumbnail"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "localhost",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "deployedHost",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "currentHost",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "host",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
